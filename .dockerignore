@@ -1,4 +1,11 @@
 *
 !Dockerfile
-!config/
-!config/health.txt
+!package*.json
+!*.config.*
+!tsconfig.json
+!app/
+!app/**
+!lib/
+!lib/**
+!public/
+!public/**

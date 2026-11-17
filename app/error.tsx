@@ -1,0 +1,1 @@
+"use client";export default function ErrorPage({reset}:{reset:()=>void}){return <section className="panel"><h2>Scholarship service unavailable</h2><p>Your request could not be completed. Check your connection and try again.</p><button onClick={reset}>Retry</button></section>;}

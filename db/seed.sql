@@ -16,4 +16,8 @@ INSERT INTO scholarship_applications VALUES ('10000000-0000-4000-8000-0000000000
 INSERT INTO profiles VALUES ('00000000-0000-4000-8000-000000000005', 'Demo Applicant 5') ON CONFLICT DO NOTHING;
 INSERT INTO student_profiles VALUES ('MHSTU0005', '00000000-0000-4000-8000-000000000005', 2026) ON CONFLICT DO NOTHING;
 INSERT INTO scholarship_applications VALUES ('10000000-0000-4000-8000-000000000005', 'MHSTU0005', 'DEMO-PMS', 2026, 'REG-5', 'DRAFT') ON CONFLICT DO NOTHING;
+-- Verification inputs (added in revision 0003). Synthetic mobile numbers; no real subscriber is implied.
+UPDATE scholarship_applications SET mahasetu_student_id = student_ref,
+  applicant_mobile = '900000000' || right(student_ref, 1)
+WHERE id::text LIKE '10000000-0000-4000-8000-00000000000_' AND mahasetu_student_id IS NULL;
 COMMIT;

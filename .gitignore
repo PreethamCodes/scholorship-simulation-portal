@@ -7,3 +7,6 @@ node_modules/
 .next/
 *.pem
 *.key
+
+*.tsbuildinfo
+next-env.d.ts

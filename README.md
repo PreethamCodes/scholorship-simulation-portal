@@ -8,6 +8,10 @@ Copy .env.example to .env for local settings. From this directory run `docker bu
 
 Public hosting is managed by the project owner. Build from this directory only. Configure per-environment HTTPS URLs and credentials on the host. 
 
+## Verification inputs
+
+An application records the applicant's MahaSetu student ID (MHSTU followed by four digits) and a ten-digit mobile number (revision 0003). Both are required on submission. The ID links department records and the mobile number receives one-time codes and result messages from MahaSetu. The mobile number is masked on screen. The portal does not yet call MahaSetu; that launch arrives in a later phase.
+
 ## Database
 
 Install requirements-db.txt in a local virtual environment. Set MIGRATION_DATABASE_URL to a confirmed PostgreSQL SQLAlchemy URL (postgresql+psycopg://...) supplied through the environment. From this directory run `alembic upgrade head` and `alembic current`. Apply db/seed.sql only to a synthetic environment with psql. Runtime credentials must be scoped to the scholarship schema. The migration identity needs schema creation and role administration privileges.

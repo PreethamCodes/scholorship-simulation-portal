@@ -1,0 +1,1 @@
+import Link from "next/link";export default function Missing(){return <section className="panel"><h2>Application unavailable</h2><p>Check the reference and the account you signed in with.</p><Link href="/">Return to scholarship services</Link></section>;}
