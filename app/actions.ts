@@ -86,9 +86,6 @@ export async function change(id:string,form:FormData){
           state=next;event="Officer review";
           await c.query("INSERT INTO officer_reviews(application_id,officer_id,recommendation,note) VALUES($1,$2,$3,$4)",[id,u.id,next==="RECOMMENDED"?"APPROVE":next==="REJECTED"?"REJECT":"MANUAL_REVIEW",note]);
         }
-      }else if(intent==="await"){
-        if(a.verification_status!=="NOT_REQUESTED" || ["RECOMMENDED","REJECTED"].includes(state))throw new UserIssue("Verification status cannot be changed.");
-        await c.query("UPDATE scholarship_applications SET verification_status='AWAITING_EXTERNAL_VERIFICATION' WHERE id=$1",[id]);event="Marked awaiting external verification";
       }else{
         if(!editable(state))throw new UserIssue("This application is locked for changes.");
         if(intent==="save"||intent==="submit"){

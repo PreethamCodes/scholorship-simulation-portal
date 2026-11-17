@@ -90,15 +90,13 @@ def test_application_lifecycle(browser, terminal):
         student.get_by_role("button", name="Upload document").click()
         expect(link).to_be_visible()
         doc_url = BASE + link.get_attribute("href")
-        student.get_by_role("button", name="Mark awaiting verification").click()
-        expect(student.locator(".status").filter(has_text="Awaiting external verification")).to_be_visible()
         student.get_by_role("button", name="Submit application").click()
         expect(student.locator(".titleline .status")).to_have_text("Submitted")
         officer = staff.new_page()
         login(officer, os.environ["SCHOLARSHIP_TEST_OFFICER_EMAIL"], os.environ["SCHOLARSHIP_TEST_OFFICER_PASSWORD"])
         expect(officer.get_by_role("heading", name="Officer desk")).to_be_visible()
         officer.get_by_label("Search applicants or references").fill(identifier)
-        officer.get_by_label("Application status", exact=True).select_option("SUBMITTED")
+        officer.get_by_label("Application status").select_option("SUBMITTED")
         officer.get_by_role("button", name="Filter queue").click()
         officer.locator("a.entry").filter(has_text=identifier).click()
         assert staff.request.get(doc_url).status == 200
@@ -127,10 +125,11 @@ def test_application_lifecycle(browser, terminal):
         student.get_by_role("button", name="Sign out").click()
         assert ctx.request.get(doc_url).status == 401
         login(student, email, password)
+        expect(student.get_by_role("heading", name="My scholarships")).to_be_visible()  # wait for the sign-in to finish
         student.goto(app_url)
         expect(student.locator(".titleline .status")).to_have_text(terminal.capitalize())
         expect(student.locator(".timeline")).to_contain_text("Clarify the synthetic programme")
-        expect(student.get_by_text("No evidence has been requested.", exact=False)).to_be_visible()
+        expect(student.get_by_role("heading", name="Verify with MahaSetu")).to_be_visible()
     finally:
         ctx.close()
         other.close()
